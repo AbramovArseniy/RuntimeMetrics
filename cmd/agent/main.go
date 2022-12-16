@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/AbramovArseniy/RuntimeMetrics/tree/increment1/internal/agent"
+	"github.com/AbramovArseniy/RuntimeMetrics/internal/agent"
 )
 
 const (
@@ -12,6 +12,6 @@ const (
 )
 
 func main() {
-	go agent.Schedule(agent.CollectRuntimeMetrics, pollRuntimeMetricsInterval)
-	go agent.Schedule(agent.SendMetrics, reportInterval)
+	go agent.Repeat(agent.CollectRuntimeMetrics, pollRuntimeMetricsInterval)
+	go agent.Repeat(agent.SendAllMetrics, reportInterval)
 }
