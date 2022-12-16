@@ -4,7 +4,7 @@ import "time"
 
 const (
 	Protocol    = "http://"
-	Server      = "localhost"
+	Server      = "127.0.0.1"
 	Port        = "8080"
 	ContentType = "text/plain"
 	TCP         = "tcp"

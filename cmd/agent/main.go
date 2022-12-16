@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/AbramovArseniy/RuntimeMetrics/tree/main/internal/agent"
+	"github.com/AbramovArseniy/RuntimeMetrics/tree/increment1/internal/agent"
 )
 
 const (
