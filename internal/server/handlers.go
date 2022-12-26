@@ -12,7 +12,8 @@ import (
 func GetAllMetricsHandler(rw http.ResponseWriter, _ *http.Request) {
 	log.Println("Get all request")
 	for metricName, metricVal := range Storage.GaugeMetrics {
-		rw.Write([]byte(fmt.Sprintf("%s: %f\n", metricName, metricVal)))
+		strVal := strconv.FormatFloat(metricVal, 'f', -1, 64)
+		rw.Write([]byte(fmt.Sprintf("%s: %s\n", metricName, strVal)))
 	}
 	for metricName, metricVal := range Storage.CounterMetrics {
 		rw.Write([]byte(fmt.Sprintf("%s: %d", metricName, metricVal)))
@@ -59,7 +60,8 @@ func GetMetricHandler(rw http.ResponseWriter, r *http.Request) {
 		if metricVal, isIn := Storage.GaugeMetrics[metricName]; isIn {
 			rw.WriteHeader(http.StatusOK)
 			rw.Header().Add("Content-Type", "text/plain")
-			_, err := rw.Write([]byte(fmt.Sprintf("%f", metricVal)))
+			strVal := strconv.FormatFloat(metricVal, 'f', -1, 64)
+			_, err := rw.Write([]byte(strVal))
 			if err != nil {
 				log.Println(err)
 				return
