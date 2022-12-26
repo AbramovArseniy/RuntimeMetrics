@@ -34,7 +34,7 @@ func PostMetricHandler(rw http.ResponseWriter, r *http.Request) {
 		log.Printf("%s: %f", metricName, newVal)
 		Storage.GaugeMetrics[metricName] = newVal
 	case "counter":
-		newVal, err := strconv.ParseInt(metricValue, 32, 64)
+		newVal, err := strconv.ParseInt(metricValue, 10, 64)
 		if err != nil {
 			log.Println()
 			http.Error(rw, "Wrong Counter Value", http.StatusBadRequest)
@@ -42,7 +42,8 @@ func PostMetricHandler(rw http.ResponseWriter, r *http.Request) {
 		log.Printf("%s: %d", metricName, newVal)
 		Storage.CounterMetrics[metricName] += newVal
 	default:
-		http.Error(rw, "Wrong Metric Type", http.StatusBadRequest)
+		log.Printf("wrong Metric Type: %s", metricType)
+		http.Error(rw, "Wrong Metric Type", http.StatusNotImplemented)
 	}
 	rw.Header().Add("Content-Type", "text/plain")
 	rw.WriteHeader(http.StatusOK)

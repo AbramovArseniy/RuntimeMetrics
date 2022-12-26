@@ -73,7 +73,7 @@ func TestGetMetricHandler(t *testing.T) {
 			name:   "400 post: wrong metric type",
 			URL:    "/update/wrongType/name/123",
 			method: http.MethodPost,
-			want:   want{code: 400},
+			want:   want{code: 501},
 		},
 		{
 			name:   "404 no such gauge",
