@@ -17,8 +17,8 @@ type Counter struct {
 }
 
 func (metric Gauge) SendGauge(client *http.Client) (bool, error) {
-	url := fmt.Sprintf("%s%s:%s/update/", Protocol, Server, Port)
-	body := strings.NewReader(fmt.Sprintf(metric.metricName, "gauge", metric.metricValue))
+	url := fmt.Sprintf("%s%s:%s/update/gauge/%s/%f", Protocol, Server, Port, metric.metricName, metric.metricValue)
+	body := strings.NewReader("")
 	resp, err := client.Post(url, "text/plain", body)
 	if err != nil {
 		return false, err
@@ -31,8 +31,8 @@ func (metric Gauge) SendGauge(client *http.Client) (bool, error) {
 }
 
 func (metric Counter) SendCounter(client *http.Client) (bool, error) {
-	url := fmt.Sprintf("%s%s:%s/update/", Protocol, Server, Port)
-	body := strings.NewReader(fmt.Sprintf(metric.metricName, "counter", metric.metricValue))
+	url := fmt.Sprintf("%s%s:%s/update/counter/%s/%d", Protocol, Server, Port, metric.metricName, metric.metricValue)
+	body := strings.NewReader("")
 	resp, err := client.Post(url, "text/plain", body)
 	if err != nil {
 		return false, err
