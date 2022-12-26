@@ -41,6 +41,8 @@ func PostMetricHandler(rw http.ResponseWriter, r *http.Request) {
 		}
 		log.Printf("%s: %d", metricName, newVal)
 		Storage.CounterMetrics[metricName] += newVal
+	default:
+		http.Error(rw, "Wrong Metric Type", http.StatusBadRequest)
 	}
 	rw.Header().Add("Content-Type", "text/plain")
 	rw.WriteHeader(http.StatusOK)
@@ -56,7 +58,7 @@ func GetMetricHandler(rw http.ResponseWriter, r *http.Request) {
 		if metricVal, isIn := Storage.GaugeMetrics[metricName]; isIn {
 			rw.WriteHeader(http.StatusOK)
 			rw.Header().Add("Content-Type", "text/plain")
-			_, err := rw.Write([]byte(fmt.Sprintf("%s: %f", metricName, metricVal)))
+			_, err := rw.Write([]byte(fmt.Sprintf("%f", metricVal)))
 			if err != nil {
 				log.Println(err)
 				return
@@ -70,7 +72,7 @@ func GetMetricHandler(rw http.ResponseWriter, r *http.Request) {
 		if metricVal, isIn := Storage.CounterMetrics[metricName]; isIn {
 			rw.WriteHeader(http.StatusOK)
 			rw.Header().Add("Content-Type", "text/plain")
-			_, err := rw.Write([]byte(fmt.Sprintf("%s: %d", metricName, metricVal)))
+			_, err := rw.Write([]byte(fmt.Sprintf("%d", metricVal)))
 			if err != nil {
 				log.Println(err)
 				return
