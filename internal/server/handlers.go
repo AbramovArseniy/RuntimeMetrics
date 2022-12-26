@@ -12,7 +12,7 @@ import (
 func GetAllMetricsHandler(rw http.ResponseWriter, _ *http.Request) {
 	log.Println("Get all request")
 	for metricName, metricVal := range Storage.GaugeMetrics {
-		rw.Write([]byte(fmt.Sprintf("%s: %f", metricName, metricVal)))
+		rw.Write([]byte(fmt.Sprintf("%s: %f\n", metricName, metricVal)))
 	}
 	for metricName, metricVal := range Storage.CounterMetrics {
 		rw.Write([]byte(fmt.Sprintf("%s: %d", metricName, metricVal)))
