@@ -54,7 +54,7 @@ func TestGetMetricHandler(t *testing.T) {
 			method: http.MethodGet,
 			want: want{
 				code: 200,
-				body: []string{"200.000000"},
+				body: []string{"200"},
 			},
 		},
 		{
